@@ -1,19 +1,31 @@
 #include "Tree.h"
 
 inline void Tree::insertTriangle(Triangle tr) {
-	Tree* temp =  Root;
-    Tree* top_left_front = temp->children[0];
-    Tree* bottom_right_back = temp->children[6];
+    Tree* top_left_front = children[0];
+    Tree* bottom_right_back = children[6];
 	float trX, trY, trZ;
 	tr.maxCoordinate(&trX, &trY, &trZ);
-    if (Root == NULL) {
-        Tree* temp1 = new Tree(tr);
-        temp1->Prev = nullptr;
-        Root = temp1;
+    if (top_left_front == nullptr or bottom_right_back == nullptr) {
+       if (top_left_front == nullptr and bottom_right_back == nullptr) {
+             Tree* temp1 = new Tree(tr);
+             children[0] = temp1;
+        }
+         else if (top_left_front == nullptr) {
+             if (trX < top_left_front->_X) {
+                 Tree* temp1 = new Tree(tr);
+                 Tree* temp2 = children[0];
+                 children[0] = temp1;
+                 children[6] = temp2;
+             }
+         }
+         else {
+             Tree* temp1 = new Tree(tr);
+             children[6] = temp1;
+         }
     }
-    else if (top_left_front == nullptr or bottom_right_back == nullptr) {
-        //...................
-    }
+    else{
+	children[0]->triangle.maxCoordinate(&top_left_front->_X, &top_left_front->_Y, &top_left_front->_Z);
+        children[6]->triangle.maxCoordinate(&bottom_right_back->_X, &bottom_right_back->_Y, &bottom_right_back->_Z);
 	float midx = (top_left_front->_X + bottom_right_back->_X) / 2;
 	float midy = (top_left_front->_Y + bottom_right_back->_Y) / 2;
 	float midz = (top_left_front->_Z + bottom_right_back->_Z) /2;
@@ -48,11 +60,11 @@ inline void Tree::insertTriangle(Triangle tr) {
     }
     if (temp->children[pos] == nullptr) {
         Tree* temp1=new Tree(tr);
-        temp->children[pos] = temp1;
-        temp1->Prev = temp;
+        children[pos] = temp1;
     }
     else  {
-        temp->children[pos]->insertTriangle(tr);
+        children[pos]->insertTriangle(tr);
+    }
     }
 
 }
