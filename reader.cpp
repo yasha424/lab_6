@@ -40,7 +40,7 @@ Point parse_point(string point_line){
     return p;
 }
 
-Triangle parse_triangle(string triangle_line, vector <Point> points){
+Triangle parse_triangle(string triangle_line, vector <Point> &points){
     Triangle t;
 
     int start = triangle_line.find(" ");

@@ -10,4 +10,4 @@ vector <Triangle> create_triangles(string);
 
 Point parse_point(string);
 
-Triangle parse_triangle(string, vector <Point> points);
+Triangle parse_triangle(string, vector <Point> &points);
