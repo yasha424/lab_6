@@ -8,13 +8,12 @@ using namespace std;
 
 class Tree
 {
-	Node* Root;
 
 public: 
 	Triangle triangle;
 	Tree* children[8];
-	Tree* Prev;
 	float _X, _Y, _Z;
+	
 	int k = 0;
 	Tree(Triangle triangle) {
 		this->triangle = triangle;
@@ -35,3 +34,4 @@ public:
 6 BRB(bottom_right_back)
 7 BLB(bottom_left_back)
 */
+
