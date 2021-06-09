@@ -9,7 +9,7 @@ class Triangle{
 public:
     Point p1, p2, p3;
     colorRGB color;
-    Triangle(){}
-
+    Triangle(){};
+    void maxCoordinate(float* _X, float* _Y, float* _Z);
     Triangle(Point, Point, Point);
 };
