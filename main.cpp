@@ -3,6 +3,7 @@
 #include "reader.h"
 #include "point.h"
 #include "triangle.h"
+#include "camera.h"
 
 using namespace std;
 
