@@ -16,9 +16,9 @@ int main(){
 
     // vector <vector<Pixel>> pixels;
     //
-    // for (size_t i = 0; i < 54; i++) {
+    // for (size_t i = 0; i < 87; i++) {
     //     vector <Pixel> pixels_1;
-    //     for (size_t j = 0; j < 54; j++) {
+    //     for (size_t j = 0; j < 51; j++) {
     //         int r = rand()%255;
     //         int g = rand()%255;
     //         int b = rand()%255;
@@ -27,6 +27,6 @@ int main(){
     //     }
     //     pixels.push_back(pixels_1);
     // }
-    // Image image(54, 54, pixels);
+    // Image image(87, 51, pixels);
     // image.write("test.bmp");
 }
