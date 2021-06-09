@@ -4,7 +4,9 @@
 using namespace std;
 
 class Plane{
-public:
     double A, B, C, D;
+public:
     Plane(Point, Point, Point);
+    Plane(double, double, double,double);
+    Point getPointIntersection(Point X1,Point X2);
 };
