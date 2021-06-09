@@ -1,9 +1,10 @@
+#pragma once
+#include "point.h"
+#include "triangle.h"
 #include <string>
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include "point.h"
-#include "triangle.h"
 using namespace std;
 
 vector <Triangle> create_triangles(string);
