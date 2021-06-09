@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -10,4 +11,8 @@ public:
     Point(){}
 
     Point(double, double, double);
+
+    bool intersection(Point, Point, Point);
+
+    double area(Point, Point, Point);
 };
