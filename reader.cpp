@@ -8,13 +8,11 @@ vector <Triangle> create_triangles(string path){
         vector <Point> points;
         while (getline(in, tmp)) {
             if (tmp[0] == 'v') {
-                Point point = parse_point(tmp);
-                points.push_back(point);
+                points.push_back(parse_point(tmp));
             }
 
             if (tmp[0] == 'f') {
-                Triangle triangle = parse_triangle(tmp, points);
-                triangles.push_back(triangle);
+                triangles.push_back(parse_triangle(tmp, points));
             }
         }
     }
