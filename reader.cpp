@@ -56,19 +56,19 @@ Triangle parse_triangle(string triangle_line, vector <Point> points){
     triangle_line.erase(0, index + 1);
     index = triangle_line.find("/");
     if (index != string::npos) {
-        t.p1 = points[stoi(triangle_line.substr(0, index)) - 1];
+        t.p2 = points[stoi(triangle_line.substr(0, index)) - 1];
     } else {
         index = triangle_line.find(" ");
-        t.p1 = points[stoi(triangle_line.substr(0, index)) - 1];
+        t.p2 = points[stoi(triangle_line.substr(0, index)) - 1];
     }
     index = triangle_line.find(" ");
     triangle_line.erase(0, index + 1);
     index = triangle_line.find("/");
     if (index != string::npos) {
-        t.p1 = points[stoi(triangle_line.substr(0, index)) - 1];
+        t.p3 = points[stoi(triangle_line.substr(0, index)) - 1];
     } else {
         index = triangle_line.find(" ");
-        t.p1 = points[stoi(triangle_line.substr(0, index)) - 1];
+        t.p3 = points[stoi(triangle_line.substr(0, index)) - 1];
     }
 
     return t;
