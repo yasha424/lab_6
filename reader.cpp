@@ -1,6 +1,9 @@
 #include "reader.h"
 
-vector <Triangle> create_triangles(string path){
+vector <Triangle> create_triangles(string path, Point &min_point, Point &max_point){
+    min_point.x = min_point.y = min_point.z = DBL_MAX;
+    max_point.x = max_point.y = max_point.z = -DBL_MAX;
+
     ifstream in(path);
     vector <Triangle> triangles;
     if (in) {
@@ -8,7 +11,28 @@ vector <Triangle> create_triangles(string path){
         vector <Point> points;
         while (getline(in, tmp)) {
             if (tmp[0] == 'v') {
-                points.push_back(parse_point(tmp));
+                Point point = parse_point(tmp);
+                points.push_back(point);
+
+                if (min_point.x > point.x) {
+                    min_point.x = point.x;
+                }
+                if (min_point.y > point.y) {
+                    min_point.y = point.y;
+                }
+                if (min_point.z > point.z) {
+                    min_point.z = point.z;
+                }
+
+                if (max_point.x < point.x) {
+                    max_point.x = point.x;
+                }
+                if (max_point.y < point.y) {
+                    max_point.y = point.y;
+                }
+                if (max_point.z < point.z) {
+                    max_point.z = point.z;
+                }
             }
 
             if (tmp[0] == 'f') {

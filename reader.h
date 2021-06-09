@@ -5,9 +5,10 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <float.h>
 using namespace std;
 
-vector <Triangle> create_triangles(string);
+vector <Triangle> create_triangles(string, Point &min_point, Point &max_point);
 
 Point parse_point(string);
 
