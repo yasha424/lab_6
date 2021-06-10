@@ -42,13 +42,13 @@ int main(){
         vector <Pixel> pixels_1;
         for (size_t j = 0; j < size * 2 + 1; j++) {
             color =0;
-            double d = DBL_MAX;
+            double d = 0;
             for (size_t k = 0; k < triangles.size(); k++) {
                 Plane plane(triangles[k]);
                 Point pixel(0 - (gap * size) + (gap * j), 0, 0  - (gap * size) + (gap * i));
                 Point point = plane.getPointIntersection(Point(-1, -1, 0), pixel);
                 Point vectorIntersection(-point.x+pixel.x,-point.y+pixel.y,-point.z+pixel.z);
-                if (point.intersection(triangles[k].p1, triangles[k].p2, triangles[k].p3)&&(d>=vectorIntersection.getModul())) {
+                if (point.intersection(triangles[k].p1, triangles[k].p2, triangles[k].p3)&&(d<vectorIntersection.getModul())) {
                         intersect = true;
                         d= vectorIntersection.getModul();
                         color = plane.getCos(point, pixel);
@@ -68,6 +68,9 @@ int main(){
         cout << endl;
         pixels.push_back(pixels_1);
     }
+
+    Image image(size*2+1, size*2+1, pixels);
+    image.write("test.bmp");
 
     // Point p1(0, 0, 3);
     // Point p2(5, 0, 0);
