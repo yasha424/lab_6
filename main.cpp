@@ -47,11 +47,11 @@ int main(){
                 Plane plane(triangles[k]);
                 Point pixel(0 - (gap * size) + (gap * j), 0, 0  - (gap * size) + (gap * i));
                 Point point = plane.getPointIntersection(Point(-1, -1, 0), pixel);
-                Point vectorIntersection(point.x-pixel.x,point.y-pixel.y,point.z-pixel.z);
-                if (point.intersection(triangles[k].p1, triangles[k].p2, triangles[k].p3)&&(d>vectorIntersection.getModul())) {
+                Point vectorIntersection(-point.x+pixel.x,-point.y+pixel.y,-point.z+pixel.z);
+                if (point.intersection(triangles[k].p1, triangles[k].p2, triangles[k].p3)&&(d>=vectorIntersection.getModul())) {
                         intersect = true;
                         d= vectorIntersection.getModul();
-                        color = plane.getCos(point, Point(-1, -1, 0));
+                        color = plane.getCos(point, pixel);
                 }
             }
             if (intersect) {
@@ -68,9 +68,6 @@ int main(){
         cout << endl;
         pixels.push_back(pixels_1);
     }
-
-    Image image(size*2+1, size*2+1, pixels);
-    image.write("test.bmp");
 
     // Point p1(0, 0, 3);
     // Point p2(5, 0, 0);
