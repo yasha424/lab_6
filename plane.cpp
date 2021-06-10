@@ -70,3 +70,9 @@ Point Plane::getPointIntersection(Point X1,Point X2){
     Point pointIntersection(X1.x+ m*t,X1.y+ p*t,X1.z+ l*t);
     return pointIntersection;
 }
+double Plane::getCos(Point a,Point b){
+    Point vectorLight(a.x-b.x,a.y-b.y,a.z-b.z);
+    Point normal(A,B,C);
+    double cos = (vectorLight.x*normal.x+vectorLight.y*normal.y+vectorLight.z*normal.z)/(vectorLight.getModul()*normal.getModul());
+    return cos;
+}

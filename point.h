@@ -15,4 +15,6 @@ public:
     bool intersection(Point, Point, Point);
 
     double area(Point, Point, Point);
+
+    double getModul();
 };

@@ -11,4 +11,5 @@ public:
     Plane(Triangle);
     Plane(double, double, double,double);
     Point getPointIntersection(Point X1,Point X2);
+    double getCos(Point,Point);
 };

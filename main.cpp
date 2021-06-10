@@ -14,8 +14,8 @@ using namespace std;
 
 int main(){
     Point min_point, max_point;
-    vector <Triangle> triangles = create_triangles("samples/cow.obj", min_point, max_point);
-    int size = 256;
+    vector <Triangle> triangles = create_triangles("samples\\cow.obj", min_point, max_point);
+    int size = 150;
     double gap = 0.004;
     Camera camera(Point(2, 2, 0), Point(1, 1, 0), size, gap);
 
@@ -37,20 +37,22 @@ int main(){
     // }
 
     bool intersect = false;
-
+    double color;
     for (size_t i = 0; i < size * 2 + 1; i++) {
         vector <Pixel> pixels_1;
         for (size_t j = 0; j < size * 2 + 1; j++) {
+            color =0;
             for (size_t k = 0; k < triangles.size(); k++) {
                 Plane plane(triangles[k]);
                 Point point = plane.getPointIntersection(Point(-1, -1, 0), Point(0 - (gap * size) + (gap * j), 0, 0  - (gap * size) + (gap * i)));
                 if (point.intersection(triangles[k].p1, triangles[k].p2, triangles[k].p3)) {
                     intersect = true;
+                    color = plane.getCos(point,Point(-2,-3,0));
                     break;
                 }
             }
             if (intersect) {
-                Pixel pixel(255, 255, 255);
+                Pixel pixel(255*color, 255*color, 255*color);
                 pixels_1.push_back(pixel);
                 cout << "x";
             } else {
@@ -64,7 +66,7 @@ int main(){
         pixels.push_back(pixels_1);
     }
 
-    Image image(513, 513, pixels);
+    Image image(size*2+1, size*2+1, pixels);
     image.write("test.bmp");
 
     // Point p1(0, 0, 3);

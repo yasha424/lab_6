@@ -5,7 +5,9 @@ Point::Point(double x, double y, double z){
     this->y = y;
     this->z = z;
 }
-
+double Point::getModul(){
+    return sqrt(x*x+y*y+z*z);
+}
 bool Point::intersection(Point p1, Point p2, Point p3){
     double eps = 0.0000001;
     if (abs(area(p1, p2, p3) - ( area(p1, p2, Point(x, y, z)) + area(p1, p3, Point(x, y, z)) + area(p2, p3, Point(x, y, z)))) < eps) {
