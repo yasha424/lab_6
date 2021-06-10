@@ -1,6 +1,7 @@
 #pragma once
-#include "Point.h"
-#include "Triangle.h"
+#include "point.h"
+#include "triangle.h"
+#include "cube.h"
 #include <string>
 #include <vector>
 
@@ -10,19 +11,19 @@ class Tree
 {
 
 public: 
-	Triangle triangle;
 	Tree* children[8];
-	float _X, _Y, _Z;
-	
+	Cube area;
+	vector <Triangle> triangles;
 	int k = 0;
-	Tree(Triangle triangle) {
-		this->triangle = triangle;
+	Tree(vector <Triangle> tr, Cube c) {
+		area = c;
+		triangles = tr;
 		for (int i = 0; i < 8; i++) {
 			children[i] = nullptr;
 		}
 	}
-	Tree() {}
-	void insertTriangle(Triangle tr);
+	Tree() {};
+	void insertTriangle(vector <Triangle> tr, Cube cube);
 };
 /*
 0 TLF(top_left_front)
