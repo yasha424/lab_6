@@ -15,8 +15,8 @@ using namespace std;
 int main(){
     Point min_point, max_point;
     vector <Triangle> triangles = create_triangles("samples/cow.obj", min_point, max_point);
-    int size = 60;
-    double gap = 0.01;
+    int size = 256;
+    double gap = 0.004;
     Camera camera(Point(2, 2, 0), Point(1, 1, 0), size, gap);
 
     cout << min_point.x << ", " << min_point.y << ", " << min_point.z << endl;
@@ -36,36 +36,36 @@ int main(){
     //     pixels.push_back(pixels_1);
     // }
 
-    // bool intersect = false;
-    //
-    // for (size_t i = 0; i < size * 2 + 1; i++) {
-    //     vector <Pixel> pixels_1;
-    //     for (size_t j = 0; j < size * 2 + 1; j++) {
-    //         for (size_t k = 0; k < triangles.size(); k++) {
-    //             Plane plane(triangles[k]);
-    //             Point point = plane.getPointIntersection(Point(-1, -1, 0), Point(0 - (gap * size) + (gap * j), 0, 0  - (gap * size) + (gap * i)));
-    //             if (point.intersection(triangles[k].p1, triangles[k].p2, triangles[k].p3)) {
-    //                 intersect = true;
-    //                 break;
-    //             }
-    //         }
-    //         if (intersect) {
-    //             Pixel pixel(255, 255, 255);
-    //             pixels_1.push_back(pixel);
-    //             cout << "x";
-    //         } else {
-    //             Pixel pixel(0, 0, 0);
-    //             pixels_1.push_back(pixel);
-    //             cout << ".";
-    //         }
-    //         intersect = false;
-    //     }
-    //     cout << endl;
-    //     pixels.push_back(pixels_1);
-    // }
-    //
-    // Image image(121, 121, pixels);
-    // image.write("test.bmp");
+    bool intersect = false;
+
+    for (size_t i = 0; i < size * 2 + 1; i++) {
+        vector <Pixel> pixels_1;
+        for (size_t j = 0; j < size * 2 + 1; j++) {
+            for (size_t k = 0; k < triangles.size(); k++) {
+                Plane plane(triangles[k]);
+                Point point = plane.getPointIntersection(Point(-1, -1, 0), Point(0 - (gap * size) + (gap * j), 0, 0  - (gap * size) + (gap * i)));
+                if (point.intersection(triangles[k].p1, triangles[k].p2, triangles[k].p3)) {
+                    intersect = true;
+                    break;
+                }
+            }
+            if (intersect) {
+                Pixel pixel(255, 255, 255);
+                pixels_1.push_back(pixel);
+                cout << "x";
+            } else {
+                Pixel pixel(0, 0, 0);
+                pixels_1.push_back(pixel);
+                cout << ".";
+            }
+            intersect = false;
+        }
+        cout << endl;
+        pixels.push_back(pixels_1);
+    }
+
+    Image image(513, 513, pixels);
+    image.write("test.bmp");
 
     // Point p1(0, 0, 3);
     // Point p2(5, 0, 0);
