@@ -22,5 +22,5 @@ public:
 
 	void make_tree(Node*);
 
-	bool is_triangle_in(Cube, Triangle);
+	static bool is_triangle_in(Cube, Triangle);
 };

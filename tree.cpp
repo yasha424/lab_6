@@ -177,11 +177,9 @@ bool Tree::is_triangle_in(Cube boundary, Triangle triangle){
         return false;
     }
 
-    if (max(trp0.x, max(trp1.x, trp2.x)) < -e0 || min(trp0.x, min(trp1.x, trp2.x)) > e0) {
+    if (max(trp0.z, max(trp1.z, trp2.z)) < -e0 || min(trp0.z, min(trp1.z, trp2.z)) > e0) {
         return false;
     }
 
-    // undone, have to go for a minute
-
-
+    return true;
 }
