@@ -42,13 +42,16 @@ int main(){
         vector <Pixel> pixels_1;
         for (size_t j = 0; j < size * 2 + 1; j++) {
             color =0;
+            double d = DBL_MAX;
             for (size_t k = 0; k < triangles.size(); k++) {
                 Plane plane(triangles[k]);
-                Point point = plane.getPointIntersection(Point(-1, -1, 0), Point(0 - (gap * size) + (gap * j), 0, 0  - (gap * size) + (gap * i)));
-                if (point.intersection(triangles[k].p1, triangles[k].p2, triangles[k].p3)) {
-                    intersect = true;
-                    color = plane.getCos(point,Point(-2,-3,0));
-                    break;
+                Point pixel(0 - (gap * size) + (gap * j), 0, 0  - (gap * size) + (gap * i));
+                Point point = plane.getPointIntersection(Point(-1, -1, 0), pixel);
+                Point vectorIntersection(point.x-pixel.x,point.y-pixel.y,point.z-pixel.z);
+                if (point.intersection(triangles[k].p1, triangles[k].p2, triangles[k].p3)&&(d>vectorIntersection.getModul())) {
+                        intersect = true;
+                        d= vectorIntersection.getModul();
+                        color = plane.getCos(point, Point(-1, -1, 0));
                 }
             }
             if (intersect) {
