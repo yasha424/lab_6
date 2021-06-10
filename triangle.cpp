@@ -6,12 +6,12 @@ Triangle::Triangle(Point p1, Point p2, Point p3){
     this->p3 = p3;
 }
 
-inline void Triangle::maxCoordinate(float* _X, float* _Y, float* _Z) {
+void Triangle::maxCoordinate(float* _X, float* _Y, float* _Z) {
 	if (p1.x < p2.x) {
 		if (p2.x < p3.x) { *_X = p3.x;}
 		else { *_X = p2.x; }
 	}
-	else { 
+	else {
 		if (p1.x<p3.x){ *_X = p3.x; }
 		else {* _X = p1.x; }
 	}

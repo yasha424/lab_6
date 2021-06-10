@@ -14,10 +14,10 @@ using namespace std;
 
 int main(){
     Point min_point, max_point;
-    vector <Triangle> triangles = create_triangles("samples\\cow.obj", min_point, max_point);
-    int size = 150;
-    double gap = 0.004;
-    Camera camera(Point(2, 2, 0), Point(1, 1, 0), size, gap);
+    vector <Triangle> triangles = create_triangles("samples/cow.obj", min_point, max_point);
+    int size = 256;
+    double gap = 0.001;
+    Camera camera(Point(0, 0, 0), Point(1, 1, 0), size, gap);
 
     cout << min_point.x << ", " << min_point.y << ", " << min_point.z << endl;
     cout << max_point.x << ", " << max_point.y << ", " << max_point.z << endl;
@@ -45,8 +45,8 @@ int main(){
             double d = 0;
             for (size_t k = 0; k < triangles.size(); k++) {
                 Plane plane(triangles[k]);
-                Point pixel(0 - (gap * size) + (gap * j), 0, 0  - (gap * size) + (gap * i));
-                Point point = plane.getPointIntersection(Point(-1, -1, 0), pixel);
+                Point pixel(0 - (gap * size) + (gap * j), -1, 0 - (gap * size) + (gap * i));
+                Point point = plane.getPointIntersection(Point(-1, -4, 0), pixel);
                 Point vectorIntersection(-point.x+pixel.x,-point.y+pixel.y,-point.z+pixel.z);
                 if (point.intersection(triangles[k].p1, triangles[k].p2, triangles[k].p3)&&(d<vectorIntersection.getModul())) {
                         intersect = true;

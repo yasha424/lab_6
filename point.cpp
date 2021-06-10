@@ -10,7 +10,7 @@ double Point::getModul(){
 }
 bool Point::intersection(Point p1, Point p2, Point p3){
     double eps = 0.0000001;
-    if (abs(area(p1, p2, p3) - ( area(p1, p2, Point(x, y, z)) + area(p1, p3, Point(x, y, z)) + area(p2, p3, Point(x, y, z)))) < eps) {
+    if (abs(area(p1, p2, p3) - (area(p1, p2, Point(x, y, z)) + area(p1, p3, Point(x, y, z)) + area(p2, p3, Point(x, y, z)))) < eps) {
         return true;
     }
     return false;
