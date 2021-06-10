@@ -8,7 +8,7 @@ class Node{
 public:
 	Cube boundary;
 	vector <Triangle> triangles;
-	Node *URF, *ULF, *URB, *ULB, *DRF, *DLF, *DRB, *DLB; // up-right-front, up-left-front, etc.
+	Node *nodes[8];
 
 	Node(Cube, vector <Triangle>);
 };
@@ -20,7 +20,7 @@ public:
 
 	Tree(Cube, vector<Triangle>);
 
-	void make_tree(Node*);
+	void make_tree(Node*&);
 
 	static bool is_triangle_in(Cube, Triangle);
 };

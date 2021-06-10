@@ -15,8 +15,10 @@
 using namespace std;
 
 int main(){
-    // Point min_point, max_point;
-    // vector <Triangle> triangles = create_triangles("samples/cow.obj", min_point, max_point);
+    Point min_point, max_point;
+    vector <Triangle> triangles = create_triangles("samples/cow.obj", min_point, max_point);
+    Tree *tree = new Tree(Cube(min_point, max_point), triangles);
+
     // int size = 256;
     // double gap = 0.001;
     // Camera camera(Point(0, 0, 0), Point(1, 1, 0), size, gap);
@@ -88,8 +90,4 @@ int main(){
     //
     // cout << inter.intersection(p1, p2, p3) << endl;
     //
-
-    Cube cube(Point(0, 0, 0), Point(8, 8, 8));
-    Triangle tr(Point(-1, -1, 8), Point(8, 0, -1), Point(0, 8, -1));
-    cout << Tree::is_triangle_in(cube, tr) << endl;
 }

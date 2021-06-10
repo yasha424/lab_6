@@ -3,53 +3,62 @@
 Node::Node(Cube boundary, vector<Triangle> triangles){
     this->boundary = boundary;
     this->triangles = triangles;
-    URF = ULF = URB = ULB = DRF = DLF = DRB = DLB = NULL;
+    for (size_t i = 0; i < 8; i++) {
+        nodes[i] = NULL;
+    }
 }
 
 Tree::Tree(Cube boundary, vector<Triangle> triangles){
     root = new Node(boundary, triangles);
-
+    make_tree(root);
 }
 
-void Tree::make_tree(Node *node){
-    Point center((root->boundary.max.x + root->boundary.min.x) / 2,
-                 (root->boundary.max.y + root->boundary.min.y) / 2,
-                 (root->boundary.max.z + root->boundary.min.z) / 2);
+void Tree::make_tree(Node *&node){
+    Point center((node->boundary.max.x + node->boundary.min.x) / 2,
+                 (node->boundary.max.y + node->boundary.min.y) / 2,
+                 (node->boundary.max.z + node->boundary.min.z) / 2);
 
     vector <Cube> boundaries;
-    boundaries.push_back(Cube(root->boundary.min, center));
-    boundaries.push_back(Cube(center, root->boundary.max));
+    boundaries.push_back(Cube(node->boundary.min, center));
+    boundaries.push_back(Cube(center, node->boundary.max));
 
-    Point p1(center.x, root->boundary.min.y, root->boundary.min.z);
-    Point p11(root->boundary.max.x, center.y, center.z);
+    Point p1(center.x, node->boundary.min.y, node->boundary.min.z);
+    Point p11(node->boundary.max.x, center.y, center.z);
     boundaries.push_back(Cube(p1, p11));
 
-    Point p2(root->boundary.min.x, center.y, root->boundary.min.z);
-    Point p22(center.x, root->boundary.max.y, center.z);
+    Point p2(node->boundary.min.x, center.y, node->boundary.min.z);
+    Point p22(center.x, node->boundary.max.y, center.z);
     boundaries.push_back(Cube(p2, p22));
 
-    Point p3(root->boundary.min.x, root->boundary.min.y, center.z);
-    Point p33(center.x, center.y, root->boundary.max.z);
+    Point p3(node->boundary.min.x, node->boundary.min.y, center.z);
+    Point p33(center.x, center.y, node->boundary.max.z);
     boundaries.push_back(Cube(p3, p33));
 
-    Point p4(center.x, center.y, root->boundary.min.z);
-    Point p44(root->boundary.max.x, root->boundary.max.y, center.z);
+    Point p4(center.x, center.y, node->boundary.min.z);
+    Point p44(node->boundary.max.x, node->boundary.max.y, center.z);
     boundaries.push_back(Cube(p4, p44));
 
-    Point p5(center.x, root->boundary.min.y, center.z);
-    Point p55(root->boundary.max.x, center.y, root->boundary.max.z);
+    Point p5(center.x, node->boundary.min.y, center.z);
+    Point p55(node->boundary.max.x, center.y, node->boundary.max.z);
     boundaries.push_back(Cube(p5, p55));
 
-    Point p6(root->boundary.min.x, center.y, center.z);
-    Point p66(center.x, root->boundary.max.y, root->boundary.max.z);
+    Point p6(node->boundary.min.x, center.y, center.z);
+    Point p66(center.x, node->boundary.max.y, node->boundary.max.z);
     boundaries.push_back(Cube(p6, p66));
 
     for (size_t i = 0; i < boundaries.size(); i++) {
         vector <Triangle> trs;
-        for (size_t j = 0; j < root->triangles.size(); j++) {
-            if (is_triangle_in(boundaries[i], root->triangles[j])) {
-                trs.push_back(root->triangles[j]);
+        for (size_t j = 0; j < node->triangles.size(); j++) {
+            if (is_triangle_in(boundaries[i], node->triangles[j])) {
+                trs.push_back(node->triangles[j]);
             }
+        }
+        node->nodes[i] = new Node(boundaries[i], trs);
+    }
+
+    for (size_t i = 0; i < 8; i++) {
+        if (node->nodes[i]->triangles.size() > 10 && (node->nodes[i]->boundary.max.x - node->nodes[i]->boundary.min.x > 0.00001)) {
+            make_tree(node->nodes[i]);
         }
     }
 }
