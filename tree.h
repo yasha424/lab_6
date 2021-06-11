@@ -1,6 +1,7 @@
 #pragma once
 #include "triangle.h"
 #include "cube.h"
+#include "plane.h"
 #include <iostream>
 #include <vector>
 
@@ -23,4 +24,8 @@ public:
 	void make_tree(Node*&);
 
 	static bool is_triangle_in(Cube, Triangle);
+
+	bool is_ray_intersect(Point, Point, Cube, double&);
+
+	void find_min_intersection(Point, Point, Triangle&, double&, Node*);
 };

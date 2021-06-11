@@ -34,3 +34,7 @@ double Point::area(Point p1, Point p2, Point p3){
 
     return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2)) / 2;
 }
+
+double Point::distance(Point p1, Point p2){
+    return (sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) + pow(p2.z - p1.z, 2)));
+}

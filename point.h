@@ -17,4 +17,6 @@ public:
     double area(Point, Point, Point);
 
     double getModul();
+
+    static double distance(Point, Point);
 };

@@ -57,7 +57,7 @@ void Tree::make_tree(Node *&node){
     }
 
     for (size_t i = 0; i < 8; i++) {
-        if (node->nodes[i]->triangles.size() > 10 && (node->nodes[i]->boundary.max.x - node->nodes[i]->boundary.min.x > 0.00001)) {
+        if (node->nodes[i]->triangles.size() > capacity && (node->nodes[i]->boundary.max.x - node->nodes[i]->boundary.min.x > 0.00001)) {
             make_tree(node->nodes[i]);
         }
     }
@@ -191,4 +191,69 @@ bool Tree::is_triangle_in(Cube boundary, Triangle triangle){
     }
 
     return true;
+}
+
+bool Tree::is_ray_intersect(Point p1, Point p2, Cube cube, double &dist){
+    Point p;
+    p.x = p2.x - p1.x;
+    p.y = p2.y - p1.y;
+    p.z = p2.z - p1.z;
+    double length = sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
+    p.x /= length;
+    p.y /= length;
+    p.z /= length;
+
+    p.x = 1 / p.x;
+    p.y = 1 / p.y;
+    p.z = 1 / p.z;
+
+    float t1 = (cube.min.x - p1.x) * p.x;
+    float t2 = (cube.max.x - p1.x) * p.x;
+    float t3 = (cube.min.y - p1.y) * p.y;
+    float t4 = (cube.max.y - p1.y) * p.y;
+    float t5 = (cube.min.z - p1.z) * p.z;
+    float t6 = (cube.max.z - p1.z) * p.z;
+
+    float tmin = max(max(min(t1, t2), min(t3, t4)), min(t5, t6));
+    float tmax = min(min(max(t1, t2), max(t3, t4)), max(t5, t6));
+
+
+    if (tmax < 0) {
+        dist = tmax;
+        return false;
+    }
+
+    if (tmin > tmax) {
+        dist = tmax;
+        return false;
+    }
+
+    dist = tmin;
+
+    return true;
+}
+
+void Tree::find_min_intersection(Point camera, Point screen, Triangle &tr, double &min, Node *node){
+    double dist;
+    if (is_ray_intersect(camera, screen, node->boundary, dist) && node->triangles.size() != 0) {
+        for (size_t i = 0; i < 8; i++) {
+            if (node->nodes[i] != NULL && node->nodes[i]->triangles.size() != 0) {
+                if (is_ray_intersect(camera, screen, node->nodes[i]->boundary, dist) && node->nodes[i]->triangles.size() > capacity) {
+                    find_min_intersection(camera, screen, tr, min, node->nodes[i]);
+                } else if (is_ray_intersect(camera, screen, node->nodes[i]->boundary, dist)) {
+                    for (size_t j = 0; j < node->nodes[i]->triangles.size(); j++) {
+                        Plane plane(node->nodes[i]->triangles[j]);
+                        Point p = plane.getPointIntersection(camera, screen);
+                        if (p.intersection(node->nodes[i]->triangles[j].p1, node->nodes[i]->triangles[j].p2, node->nodes[i]->triangles[j].p3)) {
+                            double dist = Point::distance(camera, p);
+                            if (min > dist) {
+                                min = dist;
+                                tr = node->nodes[i]->triangles[j];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

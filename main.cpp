@@ -19,14 +19,30 @@ int main(){
     vector <Triangle> triangles = create_triangles("samples/cow.obj", min_point, max_point);
     Tree *tree = new Tree(Cube(min_point, max_point), triangles);
 
-    // int size = 256;
-    // double gap = 0.001;
+    int size = 256;
+    double gap = 0.004;
     // Camera camera(Point(0, 0, 0), Point(1, 1, 0), size, gap);
+
+    vector <vector<Pixel>> pixels;
+
+    for (size_t i = 0; i < size * 2 + 1; i++) {
+        vector <Pixel> pixels_1;
+        for (size_t j = 0; j < size * 2 + 1; j++) {
+            double min = DBL_MAX;
+            Triangle tr;
+            tree->find_min_intersection(Point(2, 2, 0), Point(1 - (gap * size) + (gap * j), 1, 0 - (gap * size) + (gap * i)), tr, min, tree->root);
+            if (min != DBL_MAX) {
+                pixels_1.push_back(Pixel(255, 255, 255));
+            } else {
+                pixels_1.push_back(Pixel(0, 0, 0));
+            }
+        }
+        pixels.push_back(pixels_1);
+    }
     //
     // cout << min_point.x << ", " << min_point.y << ", " << min_point.z << endl;
     // cout << max_point.x << ", " << max_point.y << ", " << max_point.z << endl;
     //
-    // vector <vector<Pixel>> pixels;
     // //
     // // for (size_t i = 0; i < 87; i++) {
     // //     vector <Pixel> pixels_1;
@@ -73,8 +89,8 @@ int main(){
     //     pixels.push_back(pixels_1);
     // }
     //
-    // Image image(size*2+1, size*2+1, pixels);
-    // image.write("test.bmp");
+    Image image(size*2+1, size*2+1, pixels);
+    image.write("test.bmp");
 
     // Point p1(0, 0, 3);
     // Point p2(5, 0, 0);
