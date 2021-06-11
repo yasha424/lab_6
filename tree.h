@@ -27,5 +27,5 @@ public:
 
 	bool is_ray_intersect(Point, Point, Cube, double&);
 
-	void find_min_intersection(Point, Point, Triangle&, double&, Node*);
+	void find_min_intersection(Point, Point, Triangle&, double&, Node*, double&);
 };

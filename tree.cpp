@@ -233,13 +233,13 @@ bool Tree::is_ray_intersect(Point p1, Point p2, Cube cube, double &dist){
     return true;
 }
 
-void Tree::find_min_intersection(Point camera, Point screen, Triangle &tr, double &min, Node *node){
+void Tree::find_min_intersection(Point camera, Point screen, Triangle &tr, double &min, Node *node, double &color){
     double dist;
     if (is_ray_intersect(camera, screen, node->boundary, dist) && node->triangles.size() != 0) {
         for (size_t i = 0; i < 8; i++) {
             if (node->nodes[i] != NULL && node->nodes[i]->triangles.size() != 0) {
                 if (is_ray_intersect(camera, screen, node->nodes[i]->boundary, dist) && node->nodes[i]->triangles.size() > capacity) {
-                    find_min_intersection(camera, screen, tr, min, node->nodes[i]);
+                    find_min_intersection(camera, screen, tr, min, node->nodes[i], color);
                 } else if (is_ray_intersect(camera, screen, node->nodes[i]->boundary, dist)) {
                     for (size_t j = 0; j < node->nodes[i]->triangles.size(); j++) {
                         Plane plane(node->nodes[i]->triangles[j]);
@@ -247,6 +247,7 @@ void Tree::find_min_intersection(Point camera, Point screen, Triangle &tr, doubl
                         if (p.intersection(node->nodes[i]->triangles[j].p1, node->nodes[i]->triangles[j].p2, node->nodes[i]->triangles[j].p3)) {
                             double dist = Point::distance(camera, p);
                             if (min > dist) {
+                                color = plane.getCos(p, Point(0, 0, 5));
                                 min = dist;
                                 tr = node->nodes[i]->triangles[j];
                             }
