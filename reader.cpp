@@ -10,7 +10,7 @@ vector <Triangle> create_triangles(string path, Point &min_point, Point &max_poi
         string tmp;
         vector <Point> points;
         while (getline(in, tmp)) {
-            if (tmp[0] == 'v') {
+            if (tmp[0] == 'v' && tmp[1] == ' ') {
                 Point point = parse_point(tmp);
                 points.push_back(point);
 

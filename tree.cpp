@@ -57,7 +57,7 @@ void Tree::make_tree(Node *&node){
     }
 
     for (size_t i = 0; i < 8; i++) {
-        if (node->nodes[i]->triangles.size() > capacity && (node->nodes[i]->boundary.max.x - node->nodes[i]->boundary.min.x > 0.00001)) {
+        if (node->nodes[i]->triangles.size() > capacity/* && (node->nodes[i]->boundary.max.x - node->nodes[i]->boundary.min.x > 0.00001)*/) {
             make_tree(node->nodes[i]);
         }
     }
@@ -247,7 +247,7 @@ void Tree::find_min_intersection(Point camera, Point screen, Triangle &tr, doubl
                         if (p.intersection(node->nodes[i]->triangles[j].p1, node->nodes[i]->triangles[j].p2, node->nodes[i]->triangles[j].p3)) {
                             double dist = Point::distance(camera, p);
                             if (min > dist) {
-                                color = plane.getCos(p, Point(0, 0, 5));
+                                color = plane.getCos(p, Point(0, 5, 5));
                                 min = dist;
                                 tr = node->nodes[i]->triangles[j];
                             }
